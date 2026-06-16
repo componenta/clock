@@ -1,0 +1,23 @@
+{
+    "name": "componenta/clock",
+    "description": "PSR-20 clock integration for Componenta",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "psr/clock": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Componenta\\Clock\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "componenta": {
+            "config-providers": [
+                "Componenta\\Clock\\ConfigProvider"
+            ]
+        }
+    }
+}
