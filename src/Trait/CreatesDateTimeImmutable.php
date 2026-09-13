@@ -26,6 +26,10 @@ trait CreatesDateTimeImmutable
 
     public function fromMicroTimestamp(float $timestamp): DateTimeImmutable
     {
+        if (!is_finite($timestamp) || $timestamp < PHP_INT_MIN || $timestamp >= PHP_INT_MAX) {
+            throw new DateTimeParseException(is_nan($timestamp) ? 'NAN' : (string) $timestamp, context: ['type' => 'micro_timestamp']);
+        }
+
         // Handle negative timestamps correctly
         // For -1.5: floor gives -2, then (-1.5 - -2) * 1_000_000 = 500_000
         $seconds = (int) floor($timestamp);
@@ -40,11 +44,14 @@ trait CreatesDateTimeImmutable
             $microseconds += 1_000_000;
         }
 
-        /** @var DateTimeImmutable */
         $datetime = DateTimeImmutable::createFromFormat(
             'U u',
             sprintf('%d %06d', $seconds, $microseconds),
         );
+
+        if ($datetime === false) {
+            throw new DateTimeParseException((string) $timestamp, context: ['type' => 'micro_timestamp']);
+        }
 
         return $datetime->setTimezone($this->timezone);
     }
@@ -55,7 +62,11 @@ trait CreatesDateTimeImmutable
             throw new DateTimeParseException($datetime, $format, ['error' => 'Empty format string']);
         }
 
-        $result = DateTimeImmutable::createFromFormat($format, $datetime, $this->timezone);
+        try {
+            $result = DateTimeImmutable::createFromFormat($format, $datetime, $this->timezone);
+        } catch (\ValueError $error) {
+            throw new DateTimeParseException($datetime, $format, previous: $error);
+        }
 
         if ($result === false) {
             throw DateTimeParseException::fromFormat($format, $datetime);
@@ -68,7 +79,7 @@ trait CreatesDateTimeImmutable
             throw DateTimeParseException::fromFormat($format, $datetime);
         }
 
-        return $result;
+        return $result->setTimezone($this->timezone);
     }
 
     public function parse(string $datetime): DateTimeImmutable
@@ -85,7 +96,7 @@ trait CreatesDateTimeImmutable
             throw DateTimeParseException::fromString($datetime);
         }
 
-        return $result;
+        return $result->setTimezone($this->timezone);
     }
 
     public function create(

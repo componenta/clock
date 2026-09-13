@@ -5,7 +5,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
-        "componenta/config": "^1.0 || ^2.0.2",
+        "ext-mbstring": "*",
+        "componenta/config": "^3.0.0",
         "psr/clock": "^1.0"
     },
     "require-dev": {
@@ -32,6 +33,9 @@
             "config-providers": [
                 "Componenta\\Clock\\ConfigProvider"
             ]
+        },
+        "branch-alias": {
+            "dev-main": "1.1.x-dev"
         }
     },
     "minimum-stability": "stable",

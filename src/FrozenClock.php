@@ -74,7 +74,7 @@ final class FrozenClock implements DateTimeFactoryInterface
             throw DateTimeParseException::fromString($value);
         }
 
-        return $result;
+        return $result->setTimezone($timezone);
     }
 
     /**
