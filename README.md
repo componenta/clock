@@ -13,7 +13,8 @@ When `componenta/composer-plugin` is installed, the provider is added to the gen
 
 ## Requirements
 
-- PHP 8.4+
+- PHP 8.4+ with `mbstring`
+- Componenta Config 3 or 4
 - `psr/clock`
 
 ## Related Packages

@@ -13,7 +13,8 @@ composer require componenta/clock
 
 ## Требования
 
-- PHP 8.4+
+- PHP 8.4+ с расширением `mbstring`
+- Componenta Config 3 или 4
 - `psr/clock`
 
 ## Связанные пакеты

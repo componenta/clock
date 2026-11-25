@@ -6,7 +6,7 @@
     "require": {
         "php": "^8.4",
         "ext-mbstring": "*",
-        "componenta/config": "^3.0.0",
+        "componenta/config": "^3.0 || ^4.0",
         "psr/clock": "^1.0"
     },
     "require-dev": {
@@ -35,7 +35,7 @@
             ]
         },
         "branch-alias": {
-            "dev-main": "1.1.x-dev"
+            "dev-main": "1.2.x-dev"
         }
     },
     "minimum-stability": "stable",
